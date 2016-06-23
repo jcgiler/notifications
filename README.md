@@ -1,0 +1,2 @@
+# notifications
+Django Notify Project
