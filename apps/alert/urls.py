@@ -1,6 +1,6 @@
 from django.conf.urls import url
-from .views import ContentView
+from .views import Content
 
 urlpatterns = [
-	url(r'^$', ContentView.as_view(), name="index"),
+	url(r'^$', Content),
 ]
