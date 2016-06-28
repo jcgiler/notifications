@@ -1,5 +1,6 @@
 from django.contrib import admin
-from apps.alert.models import Notify
+
+from .models import Notify
 
 # Register your models here.
 
