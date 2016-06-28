@@ -1,0 +1,13 @@
+{% extends "alert/base.html" %}
+
+{% block content %}
+    <div class="contenido"><img src="/static/alert/img/alert2.jpg" alt="Ventana de aviso"/>
+      <div class="info"> 
+        <p class="linea">Apreciado Cliente,</p>
+        <p class="linea"><span>Sr.(a): {{item.nombre}}</span></p>
+        <p class="linea">In.Planet le recuerda que para continuar gozando de su servicio de Internet, debe efectuar el pago de
+        <span>{{item.saldo}}</span></p>
+        <p class="linea">Fecha máximo de pago <span>{{item.fecha}}</span></p><a href="">Continuar</a>
+      </div>
+    </div>
+{% endblock %}
