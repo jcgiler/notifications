@@ -31,8 +31,8 @@ invoice = client.read(
             ('state','=','open'),
             ('origin','like','Contrato%')
         ],
-        ('partner_id','number','amount_total','date_due'),
-        limit=3
+        ('partner_id','number','amount_total','date_due')
+        #limit=3
     )
 
 contract = client.model('ipnt.contract')
@@ -40,6 +40,10 @@ contract = client.model('ipnt.contract')
 for ids in invoice:
 
     id_sisbase = contract.get([('partner_id','=',ids['partner_id'][0])]).id_sisbase
+    ip = str(ip_address(id_sisbase)['ip'])
+
+    if ip == 'None':
+	continue
 
     try:
         rec = Notify(
@@ -48,7 +52,7 @@ for ids in invoice:
                 invoice = ids['number'],
                 date = ids['date_due'],
                 total = ids['amount_total'],
-                ip_address = str(ip_address(id_sisbase)['ip'])
+                ip_address = ip
             )
 
         rec.save()

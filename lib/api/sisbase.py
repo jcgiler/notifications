@@ -7,6 +7,8 @@ url = "http://sisbase.in-planet.net/api/datos/?id=%s"
 
 def ip_address(id_sisbase):
 
+    datos = { 'ip': None }
+
     try:
         datos = json.load(urllib2.urlopen(url % id_sisbase))
 

@@ -20,7 +20,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  animation: modal 2s 3s forwards;
+  animation: modal 0.1s 0.9s forwards;
   visibility: hidden;
   opacity: 0;
 }
