@@ -4,11 +4,11 @@ import os
 import django
 import subprocess
 
-os.sys.path.append('/home/notify/notifications/')
+os.sys.path.append('/home/jcgiler/notifications/')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'notifications.settings')
 django.setup()
 
-from apps.alert.models import Notify
+from apps.notify.models import Prevention
 
 config = {
             'user': 'apiuser',
@@ -16,15 +16,15 @@ config = {
             'port': '2200',
             'options': '-o ConnectTimeout=1 -o StrictHostKeyChecking=no',
             'ip': None,
-            'rule': rule
+            'rule': None
         }
 
-rule = 'ip firewall address-list add list=alertas address=%s' % config['ip']
+for i in Prevention.objects.all():
 
-for i in Notify.objects.all():
     config['ip'] = str(i.ip_address)
+    config['rule'] = 'ip firewall address-list add list=prevencion address=%s' % config['ip']
 
     proc = subprocess.check_output(
-        '/usr/bin/ssh %(options)s %(user)s@%(router)s -p %(port)s "%(rule)s"' % config,
-        shell=True
+            '/usr/bin/ssh %(options)s %(user)s@%(router)s -p %(port)s "%(rule)s"' % config,
+            shell=True
         )

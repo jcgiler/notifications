@@ -7,11 +7,11 @@ import erppeek
 from django.db import IntegrityError
 from sisbase import ip_address
 
-os.sys.path.append('/home/notify/notifications/')
+os.sys.path.append('/home/jcgiler/notifications/')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'notifications.settings')
 django.setup()
 
-from apps.alert.models import Notify
+from apps.notify.models import Prevention
 
 SERVER = 'http://openerp.in-planet.net:8069'
 DATABASE = 'IN_PLANET'
@@ -46,7 +46,7 @@ for ids in invoice:
 	continue
 
     try:
-        rec = Notify(
+        rec = Prevention(
                 id_sisbase = id_sisbase,
                 name = ids['partner_id'][1].strip().title(),
                 invoice = ids['number'],

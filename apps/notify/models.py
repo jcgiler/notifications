@@ -4,7 +4,7 @@ from django.db import models
 
 # Create your models here.
 
-class Notify(models.Model):
+class Prevention(models.Model):
 
     id_sisbase = models.IntegerField('ID Sisbase', unique=True)
     name = models.CharField('Nombres', max_length=255)

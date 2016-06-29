@@ -1,6 +1,6 @@
 import subprocess
 from django.shortcuts import render, Http404
-from .models import Notify
+from .models import Prevention
 from ipware.ip import get_ip
 
 # Create your views here.
@@ -9,10 +9,10 @@ def Content(request):
 
     try:
         ip = get_ip(request)
-        context = Notify.objects.get(ip_address=str(ip))
+        context = Prevention.objects.get(ip_address=str(ip))
         context.seeme = context.seeme + 1
         context.save()
-        template = 'alert/content.html'
+        template = 'notify/content.html'
 
         if context.seeme >= 5:
             context.delete()
@@ -31,5 +31,5 @@ def Content(request):
         return render(request, template,
                 { 'item': context, 'name': context.name.split(' ')[0] })
 
-    except Notify.DoesNotExist:
+    except Prevention.DoesNotExist:
         raise Http404('No existe')

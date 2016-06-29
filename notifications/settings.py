@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'apps.alert',
+    'apps.notify',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -79,7 +79,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'notify',
-        'USER': 'notify',
+        'USER': 'jcgiler',
         'PASSWORD': '6a63670d0a',
         'HOST': 'localhost'
     }
