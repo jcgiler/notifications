@@ -15,7 +15,7 @@ for i in Notify.objects.all():
             '/usr/bin/ssh %(options)s %(user)s@%(router)s -p%(port)s "ip firewall address-list add list=alertas address=%(ip)s"' %
             {
                 'user': 'apiuser',
-                'router': '192.168.1.1',
+                'router': '172.19.0.1',
                 'port': '2200',
                 'options': '-o ConnectTimeout=1 -o StrictHostKeyChecking=no',
                 'ip': str(i.ip_address)
