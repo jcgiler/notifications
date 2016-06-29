@@ -10,14 +10,21 @@ django.setup()
 
 from apps.alert.models import Notify
 
+config = {
+            'user': 'apiuser',
+            'router': '172.19.0.1',
+            'port': '2200',
+            'options': '-o ConnectTimeout=1 -o StrictHostKeyChecking=no',
+            'ip': None,
+            'rule': rule
+        }
+
+rule = 'ip firewall address-list add list=alertas address=%s' % config['ip']
+
 for i in Notify.objects.all():
+    config['ip'] = str(i.ip_address)
+
     proc = subprocess.check_output(
-            '/usr/bin/ssh %(options)s %(user)s@%(router)s -p%(port)s "ip firewall address-list add list=alertas address=%(ip)s"' %
-            {
-                'user': 'apiuser',
-                'router': '172.19.0.1',
-                'port': '2200',
-                'options': '-o ConnectTimeout=1 -o StrictHostKeyChecking=no',
-                'ip': str(i.ip_address)
-            }, shell=True
+        '/usr/bin/ssh %(options)s %(user)s@%(router)s -p %(port)s "%(rule)s"' % config,
+        shell=True
         )
