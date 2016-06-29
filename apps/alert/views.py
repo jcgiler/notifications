@@ -17,9 +17,6 @@ def Content(request):
         if context.seeme >= 5:
             context.delete()
 
-        return render(request, template,
-                { 'item': context, 'name': context.name.split(' ')[0] })
-
         proc = subprocess.check_output(
                 '/usr/bin/ssh %(options)s %(user)s@%(router)s -p%(port)s "ip firewall address-list remove [find address=%(ip)s]"' %
                 {
@@ -30,6 +27,9 @@ def Content(request):
                     'ip': str(ip)
                 }, shell=True
             )
+
+        return render(request, template,
+                { 'item': context, 'name': context.name.split(' ')[0] })
 
     except Notify.DoesNotExist:
         raise Http404('No existe')
