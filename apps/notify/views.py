@@ -7,7 +7,22 @@ from ipware.ip import get_ip
 
 def Content(request):
 
-    ip = get_ip(request)
+    ip = str(get_ip(request))
+
+    try:
+        context = Overdue.objects.get(ip_address=ip)
+        template = 'notify/content.html'
+
+        return render(request, template,
+                { 'item': context, 'name': context.name.split(' ')[0] })
+
+    except Overdue.DoesNotExist:
+        raise Http404('No existe')
+
+
+def Confirm(request):
+
+    ip = str(get_ip(request))
 
     config = {
                 'user': 'apiuser',
@@ -18,22 +33,15 @@ def Content(request):
                 'rule': 'ip firewall address-list remove [find address=%s]' % ip
             }
 
-    try:
-        context = Overdue.objects.get(ip_address=config['ip'])
+    context = Overdue.objects.get(ip_address=config['ip'])
 
-        if context.seeme < 30:
+    if context.seeme < 30:
             context.seeme = context.seeme + 1
             context.save()
 
-        template = 'notify/content.html'
+    proc = subprocess.check_output(
+            '/usr/bin/ssh %(options)s %(user)s@%(router)s -p %(port)s "%(rule)s"' % config,
+            shell=True
+        )
 
-        proc = subprocess.check_output(
-                '/usr/bin/ssh %(options)s %(user)s@%(router)s -p %(port)s "%(rule)s"' % config,
-                shell=True
-            )
-
-        return render(request, template,
-                { 'item': context, 'name': context.name.split(' ')[0] })
-
-    except Overdue.DoesNotExist:
-        raise Http404('No existe')
+    return True
