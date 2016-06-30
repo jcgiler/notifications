@@ -8,7 +8,7 @@ os.sys.path.append('/home/jcgiler/notifications/')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'notifications.settings')
 django.setup()
 
-from apps.notify.models import Prevention
+from apps.notify.models import Prevention, Overdue
 
 config = {
             'user': 'apiuser',
@@ -19,12 +19,13 @@ config = {
             'rule': None
         }
 
-for i in Prevention.objects.all():
+for i in Overdue.objects.filter(ip_address='10.9.114.170'):
 
     config['ip'] = str(i.ip_address)
-    config['rule'] = 'ip firewall address-list add list=prevencion address=%s' % config['ip']
+    config['rule'] = 'ip firewall address-list add list=vencidos address=%s' % config['ip']
 
-    proc = subprocess.check_output(
-            '/usr/bin/ssh %(options)s %(user)s@%(router)s -p %(port)s "%(rule)s"' % config,
-            shell=True
-        )
+    if i.seeme < 10:
+        proc = subprocess.check_output(
+                '/usr/bin/ssh %(options)s %(user)s@%(router)s -p %(port)s "%(rule)s"' % config,
+                shell=True
+            )

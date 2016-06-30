@@ -31,8 +31,8 @@ invoice = client.read(
             ('state','=','open'),
             ('origin','like','Contrato%')
         ],
-        ('partner_id','number','amount_total','date_due')
-        #limit=3
+        ('partner_id','number','amount_total','date_due'),
+        limit=1
     )
 
 contract = client.model('ipnt.contract')

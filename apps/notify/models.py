@@ -14,5 +14,16 @@ class Prevention(models.Model):
     ip_address = models.GenericIPAddressField('Ip', protocol='ipv4')
     seeme = models.PositiveSmallIntegerField('Visto', blank=True, null=True, default=0)
 
-    def __str__(self):
+    def __unicode__(self):
+        return self.name
+
+class Overdue(models.Model):
+
+    id_sisbase = models.IntegerField('ID Sisbase', unique=True)
+    name = models.CharField('Nombres', max_length=255)
+    pending = models.PositiveSmallIntegerField('Facturas Pendientes')
+    ip_address = models.GenericIPAddressField('Ip', protocol='ipv4')
+    seeme = models.PositiveSmallIntegerField('Visto', blank=True, null=True, default=0)
+
+    def __unicode__(self):
         return self.name

@@ -1,12 +1,11 @@
 {% extends "notify/base.html" %}
 
 {% block content %}
-    <div class="contenido"><img src="/static/notify/img/notify2.jpg" alt="Ventana de aviso"/>
+    <div class="contenido"><img src="http://notify.in-planet.net/static/notify/img/alert2.jpg" alt="Ventana de aviso"/>
       <div class="info"> 
         <p class="linea">Estimado <span>Sr.(a): {{ name }}</span></p>
-        <p class="linea">In.Planet le recuerda que para continuar gozando de su servicio de Internet, debe efectuar el pago de
-        <span>{{ item.total }}</span></p>
-        <p class="linea">Fecha máximo de pago <span>{{ item.date | date:"SHORT_DATE_FORMAT" }}</span></p><a href="">Continuar</a>
+        <p class="linea">Lamentablemente no hemos registrado su pago, por favor acérquese a nuestras oficinas o comuníquese al 1700-467526, 04-3-712922. Evite Suspensión.</p>
+        <a href="">Continuar</a>
       </div>
     </div>
 {% endblock %}
