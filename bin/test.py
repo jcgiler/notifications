@@ -19,10 +19,10 @@ config = {
             'rule': None
         }
 
-for i in Overdue.objects.filter(ip_address='10.9.114.170'):
+for i in Overdue.objects.filter(ip_address='172.31.9.26'):
 
     config['ip'] = str(i.ip_address)
-    config['rule'] = 'ip firewall address-list add list=test-vencidos address=%s' % config['ip']
+    config['rule'] = 'ip firewall address-list add list=vencidos address=%s' % config['ip']
 
     if i.seeme < 30:
 	try:
