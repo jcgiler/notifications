@@ -19,13 +19,16 @@ config = {
             'rule': None
         }
 
-for i in Overdue.objects.filter(ip_address='10.9.114.170'):
+for i in Overdue.objects.all():
 
     config['ip'] = str(i.ip_address)
     config['rule'] = 'ip firewall address-list add list=vencidos address=%s' % config['ip']
 
-    if i.seeme < 10:
-        proc = subprocess.check_output(
-                '/usr/bin/ssh %(options)s %(user)s@%(router)s -p %(port)s "%(rule)s"' % config,
-                shell=True
-            )
+    if i.seeme < 30:
+	try:
+        	proc = subprocess.check_output(
+                	'/usr/bin/ssh %(options)s %(user)s@%(router)s -p %(port)s "%(rule)s"' % config,
+                	shell=True
+            	)
+	except subprocess.CalledProcessError:
+		pass

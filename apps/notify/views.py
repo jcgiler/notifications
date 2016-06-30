@@ -21,7 +21,7 @@ def Content(request):
     try:
         context = Overdue.objects.get(ip_address=config['ip'])
 
-        if context.seeme < 10:
+        if context.seeme < 30:
             context.seeme = context.seeme + 1
             context.save()
 
