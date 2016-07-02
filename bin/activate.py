@@ -24,11 +24,15 @@ for i in Overdue.objects.all():
     config['ip'] = str(i.ip_address)
     config['rule'] = 'ip firewall address-list add list=vencidos address=%s' % config['ip']
 
-    if i.seeme < 30:
+    if i.seeme < 30 and i.removed:
 	try:
-        	proc = subprocess.check_output(
-                	'/usr/bin/ssh %(options)s %(user)s@%(router)s -p %(port)s "%(rule)s"' % config,
-                	shell=True
-            	)
+            proc = subprocess.check_output(
+                '/usr/bin/ssh %(options)s %(user)s@%(router)s -p %(port)s "%(rule)s"' % config,
+                shell=True
+            )
+
+            i.removed = False
+            i.save()
+
 	except subprocess.CalledProcessError:
 		pass

@@ -36,12 +36,14 @@ def Confirm(request):
     context = Overdue.objects.get(ip_address=config['ip'])
 
     if context.seeme < 30:
-            context.seeme = context.seeme + 1
-            context.save()
 
-    proc = subprocess.check_output(
-            '/usr/bin/ssh %(options)s %(user)s@%(router)s -p %(port)s "%(rule)s"' % config,
-            shell=True
-        )
+            proc = subprocess.check_output(
+                    '/usr/bin/ssh %(options)s %(user)s@%(router)s -p %(port)s "%(rule)s"' % config,
+                    shell=True
+                )
+
+            context.seeme = context.seeme + 1
+            context.removed = True
+            context.save()
 
     return True

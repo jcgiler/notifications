@@ -24,6 +24,7 @@ class Overdue(models.Model):
     pending = models.PositiveSmallIntegerField('Facturas Pendientes')
     ip_address = models.GenericIPAddressField('Ip', protocol='ipv4')
     seeme = models.PositiveSmallIntegerField('Visto', blank=True, null=True, default=0)
+    removed = models.BooleanField('Regla Removida', default=True)
 
     def __unicode__(self):
         return self.name

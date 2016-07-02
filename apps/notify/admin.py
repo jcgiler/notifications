@@ -12,9 +12,9 @@ class PreventionAdmin(admin.ModelAdmin):
 class OverdueAdmin(admin.ModelAdmin):
 
     list_display = ('id_sisbase','name','pending',
-            'ip_address','seeme')
+            'ip_address','seeme','removed')
 
-    list_filter = ('pending','seeme')
+    list_filter = ('pending','seeme', 'removed')
 
     search_fields = ['name', 'ip_address']
 
