@@ -16,7 +16,7 @@ class OverdueAdmin(admin.ModelAdmin):
 
     list_filter = ('pending','seeme')
 
-    search_fields = ['name',]
+    search_fields = ['name', 'ip_address']
 
 admin.site.register(Prevention, PreventionAdmin)
 admin.site.register(Overdue, OverdueAdmin)
