@@ -26,5 +26,21 @@ class Overdue(models.Model):
     seeme = models.PositiveSmallIntegerField('Visto', blank=True, null=True, default=0)
     removed = models.BooleanField('Regla Removida', default=True)
 
+    def delete(self):
+        from bin.sync import config
+        import subprocess
+
+        config['ip'] = self.ip_address
+        config['rule'] = 'ip firewall address-list remove [find address=%s]' % config['ip']
+
+        proc = subprocess.call(
+               '/usr/bin/ssh %(options)s %(user)s@%(router)s -p %(port)s "%(rule)s"' % config,
+               shell=True
+               )
+
+        super(Overdue, self).delete()
+
+        print '%s Removed' % config['ip']
+
     def __unicode__(self):
         return self.name

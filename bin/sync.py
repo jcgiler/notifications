@@ -15,12 +15,14 @@ config = {
             'router': '172.19.0.1',
             'port': '2200',
             'options': '-o ConnectTimeout=1 -o StrictHostKeyChecking=no',
-            'rule': 'ip firewall address-list print where list=vencidos',
-            'rule2': None 
+            'ip': None,
+            'rule': None
         }
 
 
 try:
+
+    config['rule'] = 'ip firewall address-list print where list=vencidos'
 
     proc = subprocess.check_output(
         '/usr/bin/ssh %(options)s %(user)s@%(router)s -p %(port)s "%(rule)s"' % config,
@@ -35,14 +37,15 @@ try:
 
         if i[2] not in list_ip_db:
 
-            config['rule2'] = 'ip firewall address-list remove [find address=%s]' % i[2]
+            config['ip'] = i[2]
+            config['rule'] = 'ip firewall address-list remove [find address=%s]' % config['ip']
 
             proc = subprocess.check_output(
-                '/usr/bin/ssh %(options)s %(user)s@%(router)s -p %(port)s "%(rule2)s"' % config,
+                '/usr/bin/ssh %(options)s %(user)s@%(router)s -p %(port)s "%(rule)s"' % config,
                 shell=True
             )
 
-            print '%s Removed' % i[2]
+            print '%s Removed' % config['ip']
 
 except subprocess.CalledProcessError:
 	pass
