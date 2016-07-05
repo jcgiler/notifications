@@ -15,27 +15,25 @@ from apps.notify.models import Overdue
 csv = open('query.csv').read().splitlines()
 
 for i in csv:
+
     c = i.split(';')
     id_sisbase = c[0]
+    ip = [ ip_address(id_sisbase)[x] for x in ['ip','estado'] ]
 
-    #ip = [ ip_address(id_sisbase)[x] for x in ['ip','estado'] ]
-    ip = str(ip_address(id_sisbase)['ip'])
+    if ip[1] == 'activo':
+        c.append(ip[0])
 
-    #if str(ip[1]) == 'suspendido':
-    #    continue
-    c.append(ip)
+        try:
+             rec = Overdue(
+                     id_sisbase = c[0],
+                     name = c[1],
+                     pending = c[2],
+                     ip_address = c[3]
+                 )
 
-    try:
-         rec = Overdue(
-                 id_sisbase = c[0],
-                 name = c[1],
-                 pending = c[2],
-                 ip_address = c[3]
-             )
+             rec.save()
 
-         rec.save()
-
-    except DataError:
-        pass
-    except IntegrityError:
-        pass
+        except DataError:
+            pass
+        except IntegrityError:
+            pass
