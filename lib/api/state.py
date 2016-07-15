@@ -18,6 +18,6 @@ from apps.notify.models import Overdue
 UTF8 = codecs.getwriter('utf8')
 sys.stdout = UTF8(sys.stdout)
 
-for i in Overdue.objects.filter(seeme=30):
+for i in Overdue.objects.all():
     print u'%s;%s' % (i.name, ip_address(i.id_sisbase)['estado'])
 
