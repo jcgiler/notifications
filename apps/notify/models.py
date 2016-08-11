@@ -21,7 +21,9 @@ class Overdue(models.Model):
 
     id_sisbase = models.IntegerField('ID Sisbase', unique=True)
     name = models.CharField('Nombres', max_length=255)
+    cid = models.CharField('Cedula', max_length=40, null=True, blank=True)
     pending = models.PositiveSmallIntegerField('Facturas Pendientes')
+    residual = models.DecimalField(max_digits=4, decimal_places=2, null=True, blank=True) 
     ip_address = models.GenericIPAddressField('Ip', protocol='ipv4')
     seeme = models.PositiveSmallIntegerField('Visto', blank=True, null=True, default=0)
     removed = models.BooleanField('Regla Removida', default=True)

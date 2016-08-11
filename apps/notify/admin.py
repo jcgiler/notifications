@@ -11,12 +11,12 @@ class PreventionAdmin(admin.ModelAdmin):
 
 class OverdueAdmin(admin.ModelAdmin):
 
-    list_display = ('id_sisbase','name','pending',
+    list_display = ('id_sisbase','name','cid','pending','residual',
             'ip_address','seeme','removed')
 
-    list_filter = ('pending','seeme', 'removed')
+    list_filter = ('pending','seeme','removed')
 
-    search_fields = ['name', 'ip_address']
+    search_fields = ['name','cid','ip_address']
 
 admin.site.register(Prevention, PreventionAdmin)
 admin.site.register(Overdue, OverdueAdmin)

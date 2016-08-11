@@ -18,8 +18,12 @@ for i in csv:
 
     c = i.split(';')
     id_sisbase = c[0]
-    ip = [ ip_address(id_sisbase)[x] for x in ['ip','estado'] ]
 
+    if ip_address(id_sisbase)['ip'] is None:
+	print 'No existe %s' % id_sisbase
+	continue
+
+    ip = [ ip_address(id_sisbase)[x] for x in ['ip','estado'] ]
     if ip[1] == 'activo':
         c.append(ip[0])
 
@@ -27,8 +31,10 @@ for i in csv:
              rec = Overdue(
                      id_sisbase = c[0],
                      name = c[1],
-                     pending = c[2],
-                     ip_address = c[3]
+		     cid = c[2],
+                     pending = c[3],
+		     residual = c[4],
+                     ip_address = c[5]
                  )
 
              rec.save()
